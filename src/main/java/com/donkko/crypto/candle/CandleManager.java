@@ -1,0 +1,84 @@
+package com.donkko.crypto.candle;
+
+import static com.donkko.crypto.constant.TradingConstants.MAX_NUMBER_OF_TIMEWINDOW;
+import static com.donkko.crypto.constant.TradingConstants.TIMEWINDOW_MINUTES;
+import static com.donkko.crypto.util.TimeUtils.getLocalDateTimeWithoutSeconds;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
+
+import com.donkko.crypto.ticker.Ticker;
+import com.donkko.crypto.ticker.TickerService;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Component
+public class CandleManager {
+
+    private final TickerService tickerService;
+
+    @Getter
+    private final ConcurrentLinkedDeque<Candle> candles = new ConcurrentLinkedDeque<>();
+
+    public Candle peekLastCandle() {
+        return candles.peekLast();
+    }
+
+    public List<Candle> getCandles(LocalDateTime from, LocalDateTime to) {
+        return candles.stream()
+                      .filter(candle -> candle.getDatetime().isAfter(from) && candle.getDatetime().isBefore(to))
+                      .collect(Collectors.toList());
+    }
+
+    public void addOrUpdateCandle() {
+
+        Ticker ticker;
+
+        try {
+            ticker = tickerService.getCurrentTicker();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        LocalDateTime tickerDateTime = getLocalDateTimeWithoutSeconds(ticker.getTimestamp());
+        int currentPrice = ticker.getCurrentPrice();
+
+        Candle newestCandle = candles.peekLast();
+
+        if (candles.isEmpty() || newestCandle.getDatetime().isBefore(tickerDateTime)) {
+            candles.addLast(Candle.of(tickerDateTime, currentPrice, currentPrice, currentPrice));
+        }
+
+        else {
+            if (newestCandle.getMaxPrice() < currentPrice) {
+                newestCandle.setMaxPrice(currentPrice);
+            }
+            if (newestCandle.getMinPrice() > currentPrice) {
+                newestCandle.setMinPrice(currentPrice);
+            }
+            newestCandle.setCurrentPrice(currentPrice);
+        }
+    }
+
+    public void removeOldCandles() {
+
+        LocalDateTime now = LocalDateTime.now();
+        Candle oldestCandle = candles.peekFirst();
+
+        if (oldestCandle == null) {
+            return;
+        }
+
+        if (oldestCandle.getDatetime()
+                        .isBefore(now.minusMinutes(TIMEWINDOW_MINUTES * MAX_NUMBER_OF_TIMEWINDOW))) {
+            candles.removeFirst();
+        }
+    }
+}

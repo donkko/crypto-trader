@@ -1,0 +1,69 @@
+group 'com.donkko'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+
+buildscript {
+    ext {
+        REPOS = {
+            jcenter()
+            maven { url "http://repo.spring.io/plugins-release" }
+            maven { url "https://plugins.gradle.org/m2/" }
+        }
+
+        DEPENDENCY_VERSIONS = [
+                "com.google.guava:guava:22.0",
+                "com.linecorp.line.bot:line-bot-plum-protocol-square-internal:0.1.0",
+
+                "com.squareup.retrofit2:converter-jackson:2.1.0",
+
+                "javax.servlet:javax.servlet-api:3.1.0",
+
+                "org.awaitility:awaitility:3.0.0",
+
+                "org.jvnet.opendmk:jmxremote_optional:1.0_01-ea",
+
+                "org.projectlombok:lombok:1.16.18",
+
+                "jp.naver.facility:imon-stats:1.1.11",
+                "jp.naver.facility:imon-stats-histogram:1.1.8",
+                "jp.naver.talk:talk-protocol:5.27.0-SNAPSHOT",
+
+                "net.sf.ehcache:ehcache:2.10.4",
+
+                "org.jvnet.opendmk:jmxremote_optional:1.0_01-ea"
+        ]
+    }
+    repositories REPOS
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.4.RELEASE"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.9.1'
+    compile group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.3.0'
+    compile group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.3.0'
+
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
+
+    compile group: 'com.google.guava', name: 'guava', version: '23.0'
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+
+    compile 'org.springframework.boot:spring-boot-starter-web'
+
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
