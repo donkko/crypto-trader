@@ -7,12 +7,14 @@ import com.donkko.crypto.exchange.bithumb.api.response.BithumbResponse;
 import com.donkko.crypto.exchange.bithumb.api.response.TickerData;
 import com.donkko.crypto.model.Currency;
 
-import lombok.RequiredArgsConstructor;
 import retrofit2.Response;
 
 //@Service
-@RequiredArgsConstructor
 public class TickerServiceBithumb implements TickerService {
+
+    public TickerServiceBithumb(BithumbPublicApi bithumbPublicApi) {
+        this.bithumbPublicApi = bithumbPublicApi;
+    }
 
     private final BithumbPublicApi bithumbPublicApi;
 

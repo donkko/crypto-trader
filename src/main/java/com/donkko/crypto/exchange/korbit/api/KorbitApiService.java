@@ -6,11 +6,14 @@ import com.donkko.crypto.exchange.korbit.api.response.KorbitAccessToken;
 import com.donkko.crypto.exchange.korbit.api.response.KorbitTicker;
 import com.donkko.crypto.exchange.korbit.api.response.Mybalances;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class KorbitApiService {
+
+    public KorbitApiService(KorbitApi korbitApi,
+                            KorbitApiSetting korbitApiSetting) {
+        this.korbitApi = korbitApi;
+        this.korbitApiSetting = korbitApiSetting;
+    }
 
     private static final String WHICH_CURRENCY = "eth_krw";
 

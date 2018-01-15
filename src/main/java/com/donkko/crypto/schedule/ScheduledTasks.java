@@ -2,6 +2,7 @@ package com.donkko.crypto.schedule;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -10,16 +11,13 @@ import com.donkko.crypto.exchange.korbit.api.KorbitApiService;
 import com.donkko.crypto.timewindow.TimeWindowManager;
 import com.donkko.crypto.trader.Trader;
 
-import lombok.RequiredArgsConstructor;
-
 @Component
-@RequiredArgsConstructor
 public class ScheduledTasks {
 
-    private final KorbitApiService korbitApiService;
-    private final CandleManager candleManager;
-    private final TimeWindowManager timeWindowManager;
-    private final Trader trader;
+    @Autowired private KorbitApiService korbitApiService;
+    @Autowired private CandleManager candleManager;
+    @Autowired private TimeWindowManager timeWindowManager;
+    @Autowired private Trader trader;
 
     @PostConstruct
     public void initToken() throws Exception {

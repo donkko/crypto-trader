@@ -17,26 +17,11 @@ buildscript {
         }
 
         DEPENDENCY_VERSIONS = [
-                "com.google.guava:guava:22.0",
-                "com.linecorp.line.bot:line-bot-plum-protocol-square-internal:0.1.0",
+                "com.google.guava:guava:23.0",
 
-                "com.squareup.retrofit2:converter-jackson:2.1.0",
-
-                "javax.servlet:javax.servlet-api:3.1.0",
+                "com.squareup.retrofit2:converter-jackson:2.3.0",
 
                 "org.awaitility:awaitility:3.0.0",
-
-                "org.jvnet.opendmk:jmxremote_optional:1.0_01-ea",
-
-                "org.projectlombok:lombok:1.16.18",
-
-                "jp.naver.facility:imon-stats:1.1.11",
-                "jp.naver.facility:imon-stats-histogram:1.1.8",
-                "jp.naver.talk:talk-protocol:5.27.0-SNAPSHOT",
-
-                "net.sf.ehcache:ehcache:2.10.4",
-
-                "org.jvnet.opendmk:jmxremote_optional:1.0_01-ea"
         ]
     }
     repositories REPOS
@@ -62,8 +47,6 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
 
     compile 'org.springframework.boot:spring-boot-starter-web'
-
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }

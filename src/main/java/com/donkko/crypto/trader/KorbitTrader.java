@@ -10,11 +10,16 @@ import com.donkko.crypto.timewindow.EmptyTimeWindowException;
 import com.donkko.crypto.timewindow.TimeWindow;
 import com.donkko.crypto.timewindow.TimeWindowManager;
 
-import lombok.RequiredArgsConstructor;
-
 @Component
-@RequiredArgsConstructor
 public class KorbitTrader implements Trader {
+
+    public KorbitTrader(CandleManager candleManager,
+                        TimeWindowManager timeWindowManager,
+                        KorbitApiService korbitApiService) {
+        this.candleManager = candleManager;
+        this.timeWindowManager = timeWindowManager;
+        this.korbitApiService = korbitApiService;
+    }
 
     private final CandleManager candleManager;
     private final TimeWindowManager timeWindowManager;

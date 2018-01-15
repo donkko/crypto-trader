@@ -1,9 +1,23 @@
 package com.donkko.crypto.exchange.korbit.api.response;
 
-import lombok.Value;
-
-@Value
 public class KorbitTicker {
-    private final Long timestamp;
-    private final Integer last;
+
+    private Long timestamp;
+    private Integer last;
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Integer getLast() {
+        return last;
+    }
+
+    public void setLast(Integer last) {
+        this.last = last;
+    }
 }

@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.donkko.crypto.exchange.bithumb.api.BithumbPublicApi;
-import com.donkko.crypto.exchange.bithumb.api.example.Api_Client;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

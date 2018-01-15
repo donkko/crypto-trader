@@ -1,23 +1,22 @@
 package com.donkko.crypto.exchange.bithumb.api;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
 import com.donkko.crypto.exchange.bithumb.api.example.Api_Client;
-import com.donkko.crypto.exchange.bithumb.api.response.BalanceData;
 import com.donkko.crypto.exchange.bithumb.api.response.BithumbResponse;
 import com.donkko.crypto.model.Currency;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.RequiredArgsConstructor;
-
 @Component
-@RequiredArgsConstructor
 public class BithumbPrivateApi {
+
+    public BithumbPrivateApi(Api_Client apiClient) {
+        this.apiClient = apiClient;
+    }
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Api_Client apiClient;

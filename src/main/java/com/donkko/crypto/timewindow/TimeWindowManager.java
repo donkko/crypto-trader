@@ -5,6 +5,7 @@ import static com.donkko.crypto.constant.TradingConstants.TIMEWINDOW_MINUTES;
 import static com.donkko.crypto.util.TimeUtils.getRepresentativeTimeWindowStamp;
 
 import java.time.LocalDateTime;
+import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
@@ -14,17 +15,20 @@ import com.donkko.crypto.candle.Candle;
 import com.donkko.crypto.candle.CandleManager;
 import com.donkko.crypto.timewindow.TimeWindow.Type;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 @Component
 public class TimeWindowManager {
 
+    public TimeWindowManager(CandleManager candleManager) {
+        this.candleManager = candleManager;
+    }
+
     private final CandleManager candleManager;
 
-    @Getter
     private final ConcurrentLinkedDeque<TimeWindow> timeWindows = new ConcurrentLinkedDeque<>();
+
+    public Deque<TimeWindow> getTimeWindows() {
+        return timeWindows;
+    }
 
     public TimeWindow getCurrentTimeWindow() throws EmptyTimeWindowException, InvalidTimeWindowException {
         if (timeWindows.isEmpty()) {

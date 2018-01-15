@@ -5,11 +5,12 @@ import org.springframework.stereotype.Service;
 import com.donkko.crypto.exchange.korbit.api.KorbitApiService;
 import com.donkko.crypto.exchange.korbit.api.response.KorbitTicker;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class TickerServiceKorbit implements TickerService {
+
+    public TickerServiceKorbit(KorbitApiService korbitApiService) {
+        this.korbitApiService = korbitApiService;
+    }
 
     private final KorbitApiService korbitApiService;
 

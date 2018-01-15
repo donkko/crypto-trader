@@ -5,6 +5,7 @@ import static com.donkko.crypto.constant.TradingConstants.TIMEWINDOW_MINUTES;
 import static com.donkko.crypto.util.TimeUtils.getLocalDateTimeWithoutSeconds;
 
 import java.time.LocalDateTime;
+import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.stream.Collectors;
@@ -14,26 +15,28 @@ import org.springframework.stereotype.Component;
 import com.donkko.crypto.ticker.Ticker;
 import com.donkko.crypto.ticker.TickerService;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 @Component
 public class CandleManager {
 
-    private final TickerService tickerService;
+    public CandleManager(TickerService tickerService) {
+        this.tickerService = tickerService;
+    }
 
-    @Getter
+    private final TickerService tickerService;
     private final ConcurrentLinkedDeque<Candle> candles = new ConcurrentLinkedDeque<>();
 
-    public Candle peekLastCandle() {
-        return candles.peekLast();
+    public Deque<Candle> getCandles() {
+        return candles;
     }
 
     public List<Candle> getCandles(LocalDateTime from, LocalDateTime to) {
         return candles.stream()
                       .filter(candle -> candle.getDatetime().isAfter(from) && candle.getDatetime().isBefore(to))
                       .collect(Collectors.toList());
+    }
+
+    public Candle peekLastCandle() {
+        return candles.peekLast();
     }
 
     public void addOrUpdateCandle() {
@@ -82,3 +85,4 @@ public class CandleManager {
         }
     }
 }
+

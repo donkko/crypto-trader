@@ -10,11 +10,14 @@ import com.donkko.crypto.candle.CandleManager;
 import com.donkko.crypto.timewindow.TimeWindow;
 import com.donkko.crypto.timewindow.TimeWindowManager;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 @RestController
 public class MonitoringController {
+
+    public MonitoringController(CandleManager candleManager,
+                                TimeWindowManager timeWindowManager) {
+        this.candleManager = candleManager;
+        this.timeWindowManager = timeWindowManager;
+    }
 
     private final CandleManager candleManager;
     private final TimeWindowManager timeWindowManager;
